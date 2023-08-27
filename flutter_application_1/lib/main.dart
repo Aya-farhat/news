@@ -1,15 +1,30 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Data/Cubits/cubit/news_cubit.dart';
+import 'package:flutter_application_1/firebase_options.dart';
 import 'package:flutter_application_1/screens/screen1.dart';
 import 'package:flutter_application_1/screens/screen2.dart';
 import 'package:flutter_application_1/screens/screen3.dart';
 import 'package:flutter_application_1/screens/screen4.dart';
+import 'package:flutter_application_1/services/fcm.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// @pragma('vm entry-point')
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   await Firebase.initializeApp(options:DefaultFirebaseOptions.android );
+//   NotificationServices().showNotification(message);
+// }
 
-void main() {
+void main() 
+// async
+ {
+  WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   runApp(const MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
