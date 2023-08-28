@@ -7,12 +7,36 @@ import 'package:flutter_application_1/screens/screen3.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class FirstScreen extends StatelessWidget {
+class FirstScreen extends StatefulWidget {
   const FirstScreen({super.key});
 
   @override
+  State<FirstScreen> createState() => _FirstScreenState();
+}
+
+class _FirstScreenState extends State<FirstScreen> with TickerProviderStateMixin{
+  late AnimationController _buttoncontroller;
+  late AnimationController _containercontoroller;
+    late AnimationController _textcontoroller;
+
+
+   @override
+  void initState() {
+    super.initState();
+    _buttoncontroller=AnimationController(vsync: this , duration: Duration(seconds: 2 ));
+    _buttoncontroller.forward();
+    _containercontoroller=AnimationController(vsync: this , duration: Duration(seconds: 3));
+    _containercontoroller.forward();
+    _textcontoroller=AnimationController(vsync: this , duration: Duration(seconds: 6));
+    _textcontoroller.forward();
+    
+    
+    
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 249, 244, 248),
       body: Center(
         child: Column(
          mainAxisAlignment: MainAxisAlignment.center,
@@ -21,11 +45,17 @@ class FirstScreen extends StatelessWidget {
               height: 40,
             ),
       
-            ElevatedButton(
-              onPressed: () async {
-                context.read<NewsCubit>().getNews();
-              },
-              child: Text("Get Updated News")),
+            SlideTransition(
+              position: Tween<Offset>(begin: Offset(0, -1),end: Offset(0, 0)).animate(_buttoncontroller),
+              child: ElevatedButton(
+                onPressed: () async {
+                  context.read<NewsCubit>().getNews();
+                },
+                child: Text("Get Updated News",
+                // style: TextStyle(color: const Color.fromARGB(255, 1, 50, 90)),
+                ),
+                ),
+            ),
               SizedBox(
                 height: 40,
               ),
@@ -72,37 +102,43 @@ class FirstScreen extends StatelessWidget {
                                            ),
                                         );
                       } ,
-                        child: Container(
-                          width: MediaQuery.of(context).size.width*0.5,
-                          height: MediaQuery.of(context).size.height*0.25,
-                          decoration: BoxDecoration(image: DecorationImage(
-                            image: NetworkImage(state.response.articles[index].urlToImage ?? "https://media4.s-nbcnews.com/i/newscms/2019_01/2705191/nbc-social-default_b6fa4fef0d31ca7e8bc7ff6d117ca9f4.png"),
-                            fit: BoxFit.fitWidth,
-                            ),
-                            borderRadius: BorderRadius.all(Radius.circular(16))
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                                     children:[
-                                SizedBox(height: 20),
-                                                
-                                Text(state.response.articles[index].author ?? "by Ryan Browne ",
-                                                    style: TextStyle(fontSize: 10,color: Color.fromARGB(255, 159, 158, 158)),),
-                                                     
-                              Text( state.response.articles[index].title ?? "Crypto investors should be prepared to lose all their money, BOE governor says",
-                              style: TextStyle(fontSize: 16,color: Color.fromARGB(255, 153, 152, 152),fontWeight: FontWeight.bold)),
-                              
-                              SizedBox(height: 20),
-                                                
-                              Text( state.response.articles[index].description ?? "“I’m going to say this very bluntly again,” he added. “Buy them only if you’re prepared to lose all your money.”",
-                                style: TextStyle(fontSize: 10,color: Color.fromARGB(255, 146, 145, 145)))
-                                                        ]
-                                                        ),
-                            )
-                                                     
-                             ),
+                        child: FadeTransition(
+                          opacity: _containercontoroller,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width*0.5,
+                            height: MediaQuery.of(context).size.height*0.25,
+                            decoration: BoxDecoration(image: DecorationImage(
+                              image: NetworkImage(state.response.articles[index].urlToImage ?? "https://media4.s-nbcnews.com/i/newscms/2019_01/2705191/nbc-social-default_b6fa4fef0d31ca7e8bc7ff6d117ca9f4.png"),
+                              fit: BoxFit.fitWidth,
+                              ),
+                              borderRadius: BorderRadius.all(Radius.circular(16))
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ScaleTransition(
+                                  scale: _textcontoroller,
+                                  child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                         children:[
+                                    SizedBox(height: 20),
+                                                    
+                                    Text(state.response.articles[index].author ?? "by Ryan Browne ",
+                                                        style: TextStyle(fontSize: 10,color: Color.fromARGB(255, 159, 158, 158)),),
+                                                         
+                                  Text( state.response.articles[index].title ?? "Crypto investors should be prepared to lose all their money, BOE governor says",
+                                  style: TextStyle(fontSize: 16,color: Color.fromARGB(255, 153, 152, 152),fontWeight: FontWeight.bold)),
+                                  
+                                  SizedBox(height: 20),
+                                                    
+                                  Text( state.response.articles[index].description ?? "“I’m going to say this very bluntly again,” he added. “Buy them only if you’re prepared to lose all your money.”",
+                                    style: TextStyle(fontSize: 10,color: Color.fromARGB(255, 146, 145, 145)))
+                                                            ]
+                                                            ),
+                                ),
+                              )
+                                                       
+                               ),
+                        ),
                        ),
                     );
                       

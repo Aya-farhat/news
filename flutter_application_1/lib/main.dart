@@ -10,18 +10,18 @@ import 'package:flutter_application_1/screens/screen4.dart';
 import 'package:flutter_application_1/services/fcm.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-@pragma('vm entry-point')
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp(options:DefaultFirebaseOptions.web );
-  NotificationServices().showNotification(message);
-}
+// @pragma('vm entry-point')
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   await Firebase.initializeApp(options:DefaultFirebaseOptions.web );
+//   NotificationServices().showNotification(message);
+// }
 
 void main() 
-async
+// async
  {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  // await Firebase.initializeApp();
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   runApp(const MyApp());
 }
 
@@ -70,7 +70,7 @@ class _MyAppState extends State<MyApp> {
           //
           // This works for code too, not just values: Most code changes can be
           // tested with just a hot reload.
-          colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 252, 252, 252)),
+          colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 255, 114, 224)),
           useMaterial3: true,
         ),
         home: const FirstScreen(),

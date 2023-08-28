@@ -27,7 +27,7 @@ class Articles {
   Articles({
     required this.source,
      this.author,
-    required this.title,
+     this.title,
     required this.description,
     required this.url,
      this.urlToImage,
@@ -36,7 +36,7 @@ class Articles {
   });
   late final Source source;
   late final String? author;
-  late final String title;
+  late final String? title;
   late final String description;
   late final String url;
   late final String? urlToImage;
@@ -45,11 +45,11 @@ class Articles {
   
   Articles.fromJson(Map<String, dynamic> json){
     source = Source.fromJson(json['source']);
-    author = json["author"];
+    author = json['author'];
     title = json['title'];
     description = json['description'];
     url = json['url'];
-    urlToImage = json["urlToImage"];
+    urlToImage = json['urlToImage'];
     publishedAt = json['publishedAt'];
     content = json['content'];
   }
